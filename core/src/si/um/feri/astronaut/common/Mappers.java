@@ -9,6 +9,7 @@ import si.um.feri.astronaut.ecs.component.DimensionComponent;
 import si.um.feri.astronaut.ecs.component.MovementComponentXYR;
 import si.um.feri.astronaut.ecs.component.PositionComponent;
 import si.um.feri.astronaut.ecs.component.RocketComponent;
+import si.um.feri.astronaut.ecs.component.ShieldComponent;
 import si.um.feri.astronaut.ecs.component.TextureComponent;
 import si.um.feri.astronaut.ecs.component.ZOrderComponent;
 
@@ -20,6 +21,9 @@ public final class Mappers {
 
     public static final ComponentMapper<AstronautComponent> ASTRONAUTS =
             ComponentMapper.getFor(AstronautComponent.class);
+
+    public static final ComponentMapper<ShieldComponent> SHIELDS =
+            ComponentMapper.getFor(ShieldComponent.class);
 
     public static final ComponentMapper<BoundsComponent> BOUNDS =
             ComponentMapper.getFor(BoundsComponent.class);

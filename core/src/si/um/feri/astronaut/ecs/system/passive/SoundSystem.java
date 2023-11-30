@@ -10,7 +10,8 @@ public class SoundSystem extends EntitySystem {
 
     private final AssetManager assetManager;
 
-    private Sound pickSound;
+    private Sound damageSound;
+    private Sound laughSound;
 
     public SoundSystem(AssetManager assetManager) {
         this.assetManager = assetManager;
@@ -19,10 +20,14 @@ public class SoundSystem extends EntitySystem {
     }
 
     private void init() {
-        pickSound = assetManager.get(AssetDescriptors.PICK_SOUND);
+        damageSound = assetManager.get(AssetDescriptors.DAMAGE_SOUNDS);
+        laughSound = assetManager.get((AssetDescriptors.LAUGH_SOUNDS));
     }
 
-    public void pick() {
-        pickSound.play();
+    public void pickDamage() {
+        damageSound.play();
+    }
+    public void pickLaugh(){
+        laughSound.play();
     }
 }

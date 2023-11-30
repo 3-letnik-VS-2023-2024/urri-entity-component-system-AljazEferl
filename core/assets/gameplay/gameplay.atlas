@@ -6,98 +6,56 @@ filter: Nearest, Nearest
 repeat: none
 ammo
   rotate: false
-  xy: 64, 30
+  xy: 2, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-asteroid128
-  rotate: false
-  xy: 206, 313
-  size: 103, 95
-  orig: 103, 95
-  offset: 0, 0
-  index: -1
-asteroid72
-  rotate: false
-  xy: 311, 336
-  size: 72, 72
-  orig: 72, 72
-  offset: 0, 0
-  index: -1
-asteroid92
-  rotate: false
-  xy: 2, 64
-  size: 96, 96
-  orig: 96, 96
-  offset: 0, 0
-  index: -1
-astronaut48
-  rotate: false
-  xy: 479, 361
-  size: 44, 47
-  orig: 44, 47
-  offset: 0, 0
-  index: -1
-astronaut52
-  rotate: false
-  xy: 385, 349
-  size: 52, 59
-  orig: 52, 59
-  offset: 0, 0
-  index: -1
 background
   rotate: false
-  xy: 2, 410
+  xy: 2, 366
   size: 1005, 610
   orig: 1005, 610
   offset: 0, 0
   index: -1
 ball
   rotate: false
-  xy: 2, 162
+  xy: 2, 118
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 piratesShip
   rotate: false
-  xy: 2, 264
+  xy: 2, 220
   size: 100, 144
   orig: 100, 144
   offset: 0, 0
   index: -1
 rock
   rotate: false
-  xy: 2, 2
+  xy: 104, 202
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 rockBig
   rotate: false
-  xy: 104, 308
+  xy: 104, 264
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-rocket64
-  rotate: false
-  xy: 439, 350
-  size: 38, 58
-  orig: 38, 58
-  offset: 0, 0
-  index: -1
 shield
   rotate: false
-  xy: 104, 164
+  xy: 206, 304
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 treasure
   rotate: false
-  xy: 104, 226
+  xy: 2, 36
   size: 80, 80
   orig: 80, 80
   offset: 0, 0

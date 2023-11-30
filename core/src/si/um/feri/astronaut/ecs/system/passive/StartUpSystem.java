@@ -20,5 +20,6 @@ public class StartUpSystem extends EntitySystem {
     private void onStartUp() {
         factory.createAsteroid();
         factory.createRocket();
+        factory.createShield();
     }
 }

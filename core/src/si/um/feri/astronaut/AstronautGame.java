@@ -29,6 +29,7 @@ import si.um.feri.astronaut.ecs.system.HudRenderSystem;
 import si.um.feri.astronaut.ecs.system.MovementSystem;
 import si.um.feri.astronaut.ecs.system.RenderSystem;
 import si.um.feri.astronaut.ecs.system.RocketInputSystem;
+import si.um.feri.astronaut.ecs.system.ShieldSpawnSystem;
 import si.um.feri.astronaut.ecs.system.WorldWrapSystem;
 import si.um.feri.astronaut.ecs.system.debug.DebugCameraSystem;
 import si.um.feri.astronaut.ecs.system.debug.DebugInputSystem;
@@ -70,12 +71,13 @@ public class AstronautGame extends ApplicationAdapter {
         assetManager = new AssetManager();
         assetManager.getLogger().setLevel(Logger.DEBUG);
 
-        assetManager.load(AssetDescriptors.GAME_PLAY);
-        assetManager.load(AssetDescriptors.PICK_SOUND);
-        assetManager.load(AssetDescriptors.FONT32);
+        assetManager.load(AssetDescriptors.GAMEPLAY);
+        assetManager.load(AssetDescriptors.DAMAGE_SOUNDS);
+        assetManager.load(AssetDescriptors.LAUGH_SOUNDS);
+        assetManager.load(AssetDescriptors.UI_FONT);
         assetManager.finishLoading();
 
-        font = assetManager.get(AssetDescriptors.FONT32);
+        font = assetManager.get(AssetDescriptors.UI_FONT);
 
         engine = new PooledEngine();
 
@@ -91,6 +93,7 @@ public class AstronautGame extends ApplicationAdapter {
         engine.addSystem(new BoundsSystem());
         engine.addSystem(new AsteroidSpawnSystem());
         engine.addSystem(new AstronautSpawnSystem());
+        engine.addSystem(new ShieldSpawnSystem());
         engine.addSystem(new CleanUpSystem());
         engine.addSystem(new CollisionSystem());
         engine.addSystem(new RenderSystem(batch, viewport));
