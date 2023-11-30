@@ -1,0 +1,48 @@
+
+gameplay.png
+size: 512, 128
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+asteroid128
+  rotate: false
+  xy: 2, 3
+  size: 103, 95
+  orig: 103, 95
+  offset: 0, 0
+  index: -1
+asteroid72
+  rotate: false
+  xy: 205, 26
+  size: 72, 72
+  orig: 72, 72
+  offset: 0, 0
+  index: -1
+asteroid92
+  rotate: false
+  xy: 107, 2
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+astronaut48
+  rotate: false
+  xy: 373, 51
+  size: 44, 47
+  orig: 44, 47
+  offset: 0, 0
+  index: -1
+astronaut52
+  rotate: false
+  xy: 279, 39
+  size: 52, 59
+  orig: 52, 59
+  offset: 0, 0
+  index: -1
+rocket64
+  rotate: false
+  xy: 333, 40
+  size: 38, 58
+  orig: 38, 58
+  offset: 0, 0
+  index: -1
