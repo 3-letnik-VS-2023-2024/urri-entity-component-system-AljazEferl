@@ -14,9 +14,12 @@ public class GameConfig {
     public static final float SHIELD_WIDTH = 50f;
     public static final float SHIELD_HEIGHT  = 50f;
 
+    public static final float AMMO_SIZE = 32f;
     public static final float SHIELD_SIZE = 48f;
     public static  final float SHIELD_SPAWN_TIME = 5;
     public static final float SHIELD_SPEED_X_MIN = 2f;
+
+    public static final float AMMO_SPEED_X_MIN = 5f;
     public static final float ASTEROID_SPEED_X_MIN = 2f;
 
     public static final float ASTRONAUT_SIZE = 48f;

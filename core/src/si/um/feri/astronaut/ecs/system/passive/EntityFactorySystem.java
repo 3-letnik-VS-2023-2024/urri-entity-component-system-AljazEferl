@@ -3,6 +3,7 @@ package si.um.feri.astronaut.ecs.system.passive;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.math.MathUtils;
 import si.um.feri.astronaut.assets.AssetDescriptors;
 import si.um.feri.astronaut.assets.RegionNames;
 import si.um.feri.astronaut.config.GameConfig;
+import si.um.feri.astronaut.ecs.component.AmmoComponent;
 import si.um.feri.astronaut.ecs.component.AsteroidComponent;
 import si.um.feri.astronaut.ecs.component.AstronautComponent;
 import si.um.feri.astronaut.ecs.component.BoundsComponent;
@@ -29,12 +31,15 @@ public class EntityFactorySystem extends EntitySystem {
     private static final int ASTEROID_Z_ORDER = 1;
     private static final int ASTRONAUT_Z_ORDER = 2;
     private static final int SHIELD_Z_ORDER = 3;
+
+
     private static final int ROCKET_Z_ORDER = 4;
 
     private final AssetManager assetManager;
 
     private PooledEngine engine;
     private TextureAtlas gamePlayAtlas;
+    private Entity rocketEntity;
 
     public EntityFactorySystem(AssetManager assetManager) {
         this.assetManager = assetManager;
@@ -86,6 +91,7 @@ public class EntityFactorySystem extends EntitySystem {
         entity.add(texture);
         entity.add(zOrder);
         engine.addEntity(entity);
+        rocketEntity = entity;
     }
 
     public void createAsteroid() {
@@ -116,7 +122,7 @@ public class EntityFactorySystem extends EntitySystem {
         ZOrderComponent zOrder = engine.createComponent(ZOrderComponent.class);
         zOrder.z = ASTEROID_Z_ORDER;
 
-        // WorldWrapComponent worldWrap = engine.createComponent(WorldWrapComponent.class);
+         WorldWrapComponent worldWrap = engine.createComponent(WorldWrapComponent.class);
 
         CleanUpComponent cleanUp = engine.createComponent(CleanUpComponent.class);
 
@@ -128,7 +134,7 @@ public class EntityFactorySystem extends EntitySystem {
         entity.add(asteroidComponent);
         entity.add(texture);
         entity.add(zOrder);
-        // entity.add(worldWrap);
+         entity.add(worldWrap);
         entity.add(cleanUp);
         engine.addEntity(entity);
     }
@@ -160,6 +166,7 @@ public class EntityFactorySystem extends EntitySystem {
         zOrder.z = ASTRONAUT_Z_ORDER;
 
         CleanUpComponent cleanUp = engine.createComponent(CleanUpComponent.class);
+        WorldWrapComponent worldWrap = engine.createComponent(WorldWrapComponent.class);
 
         Entity entity = engine.createEntity();
         entity.add(position);
@@ -170,6 +177,7 @@ public class EntityFactorySystem extends EntitySystem {
         entity.add(texture);
         entity.add(zOrder);
         entity.add(cleanUp);
+        entity.add(worldWrap);
         engine.addEntity(entity);
     }
     public void createShield() {
@@ -196,9 +204,10 @@ public class EntityFactorySystem extends EntitySystem {
         texture.region = gamePlayAtlas.findRegion(RegionNames.SHIELD);
 
         ZOrderComponent zOrder = engine.createComponent(ZOrderComponent.class);
-        zOrder.z = ASTRONAUT_Z_ORDER;
+        zOrder.z = SHIELD_Z_ORDER;
 
         CleanUpComponent cleanUp = engine.createComponent(CleanUpComponent.class);
+        WorldWrapComponent worldWrap = engine.createComponent(WorldWrapComponent.class);
 
         Entity entity = engine.createEntity();
         entity.add(position);
@@ -209,9 +218,57 @@ public class EntityFactorySystem extends EntitySystem {
         entity.add(texture);
         entity.add(zOrder);
         entity.add(cleanUp);
+        entity.add(worldWrap);
+        engine.addEntity(entity);
+
+
+    }
+    public void createAmmo() {
+        AmmoComponent ammo = engine.createComponent(AmmoComponent.class);
+
+        DimensionComponent dimension = engine.createComponent(DimensionComponent.class);
+        dimension.width = GameConfig.AMMO_SIZE;
+        dimension.height = GameConfig.AMMO_SIZE;
+
+        MovementComponentXYR movementComponent = engine.createComponent(MovementComponentXYR.class);
+        movementComponent.ySpeed = GameConfig.AMMO_SPEED_X_MIN;
+
+        //PIRATES SHIP MEASURES
+        PositionComponent rocketPosition = rocketEntity.getComponent(PositionComponent.class);
+        DimensionComponent rocketDimensions = rocketEntity.getComponent(DimensionComponent.class);
+
+
+        PositionComponent position = engine.createComponent(PositionComponent.class);
+        position.x = rocketPosition.x + rocketDimensions.width /2 - dimension.width/2;
+        position.y = rocketPosition.y + rocketDimensions.height;
+        //END PIRATES SHIP MEASURES
+        BoundsComponent bounds = engine.createComponent(BoundsComponent.class);
+        bounds.rectangle.setPosition(position.x, position.y);
+        bounds.rectangle.setSize(dimension.width, dimension.height);
+
+        TextureComponent texture = engine.createComponent(TextureComponent.class);
+        texture.region = gamePlayAtlas.findRegion(RegionNames.AMMO);
+
+        ZOrderComponent zOrder = engine.createComponent(ZOrderComponent.class);
+        zOrder.z = ROCKET_Z_ORDER;
+
+        CleanUpComponent cleanUp = engine.createComponent(CleanUpComponent.class);
+
+
+        Entity entity = engine.createEntity();
+        entity.add(position);
+        entity.add(dimension);
+        entity.add(bounds);
+        entity.add(movementComponent);
+        entity.add(ammo);
+        entity.add(texture);
+        entity.add(zOrder);
+        entity.add(cleanUp);
         engine.addEntity(entity);
 
 
     }
 
 }
+
+

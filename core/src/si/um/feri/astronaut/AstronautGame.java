@@ -131,6 +131,9 @@ public class AstronautGame extends ApplicationAdapter {
             engine.update(0);
         } else {
             engine.update(Gdx.graphics.getDeltaTime());
+            if(GameManager.INSTANCE.getShieldDuration() > 0){
+            GameManager.INSTANCE.setDuration((GameManager.INSTANCE.getShieldDuration())-Gdx.graphics.getDeltaTime());
+            }
         }
     }
 

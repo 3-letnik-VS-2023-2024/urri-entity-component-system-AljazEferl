@@ -1,5 +1,6 @@
 package si.um.feri.astronaut.ecs.system;
 
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
@@ -10,9 +11,12 @@ import si.um.feri.astronaut.common.Mappers;
 import si.um.feri.astronaut.config.GameConfig;
 import si.um.feri.astronaut.ecs.component.MovementComponentXYR;
 import si.um.feri.astronaut.ecs.component.RocketComponent;
+import si.um.feri.astronaut.ecs.system.passive.EntityFactorySystem;
 
 
 public class RocketInputSystem extends IteratingSystem {
+
+    private EntityFactorySystem entityFactorySystem;
 
     private static final Family FAMILY = Family.all(
             RocketComponent.class,
@@ -25,6 +29,11 @@ public class RocketInputSystem extends IteratingSystem {
 
     // we don't need to override the update Iterating system method because there is no batch begin/end
 
+    public void addedToEngine(Engine engine) {
+        super.addedToEngine(engine);
+        entityFactorySystem = engine.getSystem(EntityFactorySystem.class);
+    }
+
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         MovementComponentXYR movement = Mappers.MOVEMENT.get(entity);
@@ -34,6 +43,9 @@ public class RocketInputSystem extends IteratingSystem {
             movement.xSpeed = GameConfig.MAX_ROCKET_X_SPEED * deltaTime;
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             movement.xSpeed = -GameConfig.MAX_ROCKET_X_SPEED * deltaTime;
+        }
+        else if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+            entityFactorySystem.createAmmo();
         }
 
     }

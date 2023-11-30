@@ -34,16 +34,26 @@ public class HudRenderSystem extends EntitySystem {
         font.setColor(Color.WHITE);
 
         // score
+        // SCORE
         String scoreString = "SCORE: " + GameManager.INSTANCE.getResult();
         layout.setText(font, scoreString);
-        float y = hudViewport.getWorldHeight() - PADDING;
-        font.draw(batch, layout, PADDING, y);
+        float scoreX = hudViewport.getWorldWidth() / 6 - layout.width / 2;
+        float y = hudViewport.getWorldHeight() - layout.height;
+        font.draw(batch, layout, scoreX, y);
 
-        // health
+// HEALTH
         String healthString = "HEALTH: " + GameManager.INSTANCE.getHealth();
         layout.setText(font, healthString);
-        float healthX = (hudViewport.getWorldWidth() + layout.width) / 2 - layout.width;
+        float healthX = 3 * hudViewport.getWorldWidth() / 6 - layout.width / 2;
         font.draw(batch, layout, healthX, y);
+
+// SHIELD
+        int shieldDuration = (int) GameManager.INSTANCE.getShieldDuration();
+        String shieldString = "SHIELD: " + shieldDuration;
+        layout.setText(font, shieldString);
+        float shieldX = 5 * hudViewport.getWorldWidth() / 6 - layout.width / 2;
+        font.draw(batch, layout, shieldX, y);
+
 
         if (GameManager.INSTANCE.isGameOver()) {
             font.setColor(Color.RED);

@@ -6,6 +6,9 @@ public class GameManager {
 
     private int result;
     private int health;
+    public float duration;
+
+    private boolean shield;
 
     private GameManager() {
     }
@@ -23,6 +26,15 @@ public class GameManager {
         result++;
     }
 
+    public float getShieldDuration(){
+        return duration;
+
+    }
+
+    public void setDuration(float duration) {
+        this.duration = duration;
+    }
+
     public boolean isGameOver() {
         return health <= 0;
     }
@@ -32,6 +44,6 @@ public class GameManager {
     }
 
     public void damage() {
-        health--;
+        health = health - 10;
     }
 }

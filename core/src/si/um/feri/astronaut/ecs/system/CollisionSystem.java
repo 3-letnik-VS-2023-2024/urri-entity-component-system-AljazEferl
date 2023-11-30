@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Intersector;
 
 import si.um.feri.astronaut.common.GameManager;
 import si.um.feri.astronaut.common.Mappers;
+import si.um.feri.astronaut.ecs.component.AmmoComponent;
 import si.um.feri.astronaut.ecs.component.AsteroidComponent;
 import si.um.feri.astronaut.ecs.component.AstronautComponent;
 import si.um.feri.astronaut.ecs.component.BoundsComponent;
@@ -24,6 +25,8 @@ public class CollisionSystem extends EntitySystem {
     private static final Family ASTRONAUT_FAMILY = Family.all(AstronautComponent.class, BoundsComponent.class).get();
 
     private static final Family SHIELD_FAMILY = Family.all(ShieldComponent.class, BoundsComponent.class).get();
+
+    private static final Family AMMO_FAMILY = Family.all(AmmoComponent.class,BoundsComponent.class).get();
     private SoundSystem soundSystem;
 
     public CollisionSystem() {
@@ -42,6 +45,7 @@ public class CollisionSystem extends EntitySystem {
         ImmutableArray<Entity> asteroids = getEngine().getEntitiesFor(ASTEROID_FAMILY);
         ImmutableArray<Entity> astronauts = getEngine().getEntitiesFor(ASTRONAUT_FAMILY);
         ImmutableArray<Entity> shields = getEngine().getEntitiesFor(SHIELD_FAMILY);
+        ImmutableArray<Entity> ammos = getEngine().getEntitiesFor(AMMO_FAMILY);
 
         for (Entity rocketEntity : rockets) {
             BoundsComponent rocketBounds = Mappers.BOUNDS.get(rocketEntity);
@@ -55,13 +59,26 @@ public class CollisionSystem extends EntitySystem {
                 }
 
                 BoundsComponent asteroidBounds = Mappers.BOUNDS.get(asteroidEntity);
-                if(GameManager.INSTANCE.getShield() == true){
+                for (Entity ammoEntity : ammos) {
+                    AmmoComponent ammo = Mappers.AMMOS.get(ammoEntity);
+                    BoundsComponent ammoBounds = Mappers.BOUNDS.get(ammoEntity);
+                    if (Intersector.overlaps(asteroidBounds.rectangle, ammoBounds.rectangle)) {
+
+                        asteroid.hit = true;
+                        ammo.hit = true;
+                        getEngine().removeEntity(asteroidEntity);
+                        getEngine().removeEntity(ammoEntity);
+                    }
+                }
+
+
+                    if(GameManager.INSTANCE.getShieldDuration() > 0){
                     if (Intersector.overlaps(rocketBounds.rectangle, asteroidBounds.rectangle)) {
                         asteroid.hit = true;
                         getEngine().removeEntity(asteroidEntity);
                     }
                 }
-                else if (!GameManager.INSTANCE.getShield() && Intersector.overlaps(rocketBounds.rectangle, asteroidBounds.rectangle)) {
+                else if (GameManager.INSTANCE.getShieldDuration() <= 0 &&  Intersector.overlaps(rocketBounds.rectangle, asteroidBounds.rectangle)) {
                     asteroid.hit = true;
                     GameManager.INSTANCE.damage();
                     soundSystem.pickDamage();
@@ -97,17 +114,17 @@ public class CollisionSystem extends EntitySystem {
                 BoundsComponent shieldBounds = Mappers.BOUNDS.get(shieldEntity);
                 if (Intersector.overlaps(rocketBounds.rectangle, shieldBounds.rectangle)) {
                     shield.hit = true;
-                    GameManager.INSTANCE.setShield(true);
-                    shield.duration = shieldDuration;
+                    GameManager.INSTANCE.setDuration(shieldDuration);
                     getEngine().removeEntity(shieldEntity);
                 }
-                shield.duration -= deltaTime;
-                if (shield.duration <= 0) {
-                    GameManager.INSTANCE.setShield(false);
+
+                if(GameManager.INSTANCE.getShieldDuration() <= 0){
+                    GameManager.INSTANCE.setDuration(0f);
+
                 }
+                System.out.println("Shield Duration: " + GameManager.INSTANCE.getShieldDuration());
+
             }
-
-
 
             }
 

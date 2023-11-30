@@ -2,6 +2,7 @@ package si.um.feri.astronaut.common;
 
 import com.badlogic.ashley.core.ComponentMapper;
 
+import si.um.feri.astronaut.ecs.component.AmmoComponent;
 import si.um.feri.astronaut.ecs.component.AsteroidComponent;
 import si.um.feri.astronaut.ecs.component.AstronautComponent;
 import si.um.feri.astronaut.ecs.component.BoundsComponent;
@@ -24,6 +25,10 @@ public final class Mappers {
 
     public static final ComponentMapper<ShieldComponent> SHIELDS =
             ComponentMapper.getFor(ShieldComponent.class);
+
+    public static final ComponentMapper<AmmoComponent> AMMOS =
+            ComponentMapper.getFor(AmmoComponent.class);
+
 
     public static final ComponentMapper<BoundsComponent> BOUNDS =
             ComponentMapper.getFor(BoundsComponent.class);
