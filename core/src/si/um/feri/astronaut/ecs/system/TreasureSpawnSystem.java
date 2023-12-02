@@ -6,12 +6,12 @@ import com.badlogic.ashley.systems.IntervalSystem;
 import si.um.feri.astronaut.config.GameConfig;
 import si.um.feri.astronaut.ecs.system.passive.EntityFactorySystem;
 
-public class AstronautSpawnSystem extends IntervalSystem {
+public class TreasureSpawnSystem extends IntervalSystem {
 
     private EntityFactorySystem factory;
 
-    public AstronautSpawnSystem() {
-        super(GameConfig.ASTRONAUT_SPAWN_TIME);
+    public TreasureSpawnSystem() {
+        super(GameConfig.TREASURE_SPAWN_TIME);
     }
 
     @Override
@@ -22,6 +22,6 @@ public class AstronautSpawnSystem extends IntervalSystem {
 
     @Override
     protected void updateInterval() {
-        factory.createAstronaut();
+        factory.createTreasure();
     }
 }

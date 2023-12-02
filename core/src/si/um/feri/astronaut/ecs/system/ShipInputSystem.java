@@ -10,20 +10,20 @@ import com.badlogic.gdx.Input;
 import si.um.feri.astronaut.common.Mappers;
 import si.um.feri.astronaut.config.GameConfig;
 import si.um.feri.astronaut.ecs.component.MovementComponentXYR;
-import si.um.feri.astronaut.ecs.component.RocketComponent;
+import si.um.feri.astronaut.ecs.component.ShipComponent;
 import si.um.feri.astronaut.ecs.system.passive.EntityFactorySystem;
 
 
-public class RocketInputSystem extends IteratingSystem {
+public class ShipInputSystem extends IteratingSystem {
 
     private EntityFactorySystem entityFactorySystem;
 
     private static final Family FAMILY = Family.all(
-            RocketComponent.class,
+            ShipComponent.class,
             MovementComponentXYR.class
     ).get();
 
-    public RocketInputSystem() {
+    public ShipInputSystem() {
         super(FAMILY);
     }
 
@@ -40,11 +40,12 @@ public class RocketInputSystem extends IteratingSystem {
         movement.xSpeed = 0;
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            movement.xSpeed = GameConfig.MAX_ROCKET_X_SPEED * deltaTime;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            movement.xSpeed = -GameConfig.MAX_ROCKET_X_SPEED * deltaTime;
+            movement.xSpeed = GameConfig.MAX_SHIP_X_SPEED * deltaTime;
         }
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            movement.xSpeed = -GameConfig.MAX_SHIP_X_SPEED * deltaTime;
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
             entityFactorySystem.createAmmo();
         }
 

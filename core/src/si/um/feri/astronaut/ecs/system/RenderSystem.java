@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import si.um.feri.astronaut.common.Mappers;
 import si.um.feri.astronaut.ecs.component.DimensionComponent;
+import si.um.feri.astronaut.ecs.component.ParticleComponent;
 import si.um.feri.astronaut.ecs.component.PositionComponent;
 import si.um.feri.astronaut.ecs.component.TextureComponent;
 import si.um.feri.astronaut.ecs.component.ZOrderComparator;
@@ -21,11 +22,12 @@ public class RenderSystem extends SortedIteratingSystem {
             DimensionComponent.class,
             TextureComponent.class,
             ZOrderComponent.class
+          // ParticleComponent.class
     ).get();
 
     private final SpriteBatch batch;
     private final Viewport viewport;
-
+    private Entity backgroundEntity;
     public RenderSystem(SpriteBatch batch, Viewport viewport) {
         super(FAMILY, ZOrderComparator.INSTANCE);
         this.batch = batch;
@@ -41,15 +43,24 @@ public class RenderSystem extends SortedIteratingSystem {
         super.update(deltaTime);    // calls processEntity method, which is wrapped with begin/end
 
         batch.end();
+
     }
+
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         PositionComponent position = Mappers.POSITION.get(entity);
         DimensionComponent dimension = Mappers.DIMENSION.get(entity);
         TextureComponent texture = Mappers.TEXTURE.get(entity);
+        ParticleComponent particleComponent = Mappers.PARTICLE.get(entity);
+     if (particleComponent != null && particleComponent.particle != null) {
+            particleComponent.particle.draw(batch);
+           System.out.println("44");
+        }else {
+            System.out.println("123");
+        }
 
-        batch.draw(texture.region,
+       batch.draw(texture.region,
                 position.x, position.y,
                 dimension.width / 2, dimension.height / 2,
                 dimension.width, dimension.height,

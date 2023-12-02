@@ -5,24 +5,23 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Intersector;
 
 import si.um.feri.astronaut.common.GameManager;
 import si.um.feri.astronaut.common.Mappers;
 import si.um.feri.astronaut.ecs.component.AmmoComponent;
-import si.um.feri.astronaut.ecs.component.AsteroidComponent;
-import si.um.feri.astronaut.ecs.component.AstronautComponent;
+import si.um.feri.astronaut.ecs.component.RockComponent;
+import si.um.feri.astronaut.ecs.component.TreasureComponent;
 import si.um.feri.astronaut.ecs.component.BoundsComponent;
-import si.um.feri.astronaut.ecs.component.RocketComponent;
+import si.um.feri.astronaut.ecs.component.ShipComponent;
 import si.um.feri.astronaut.ecs.component.ShieldComponent;
 import si.um.feri.astronaut.ecs.system.passive.SoundSystem;
 
 public class CollisionSystem extends EntitySystem {
 
-    private static final Family ROCKET_FAMILY = Family.all(RocketComponent.class, BoundsComponent.class).get();
-    private static final Family ASTEROID_FAMILY = Family.all(AsteroidComponent.class, BoundsComponent.class).get();
-    private static final Family ASTRONAUT_FAMILY = Family.all(AstronautComponent.class, BoundsComponent.class).get();
+    private static final Family ROCKET_FAMILY = Family.all(ShipComponent.class, BoundsComponent.class).get();
+    private static final Family ASTEROID_FAMILY = Family.all(RockComponent.class, BoundsComponent.class).get();
+    private static final Family ASTRONAUT_FAMILY = Family.all(TreasureComponent.class, BoundsComponent.class).get();
 
     private static final Family SHIELD_FAMILY = Family.all(ShieldComponent.class, BoundsComponent.class).get();
 
@@ -52,7 +51,7 @@ public class CollisionSystem extends EntitySystem {
 
             // check collision with asteroids
             for (Entity asteroidEntity : asteroids) {
-                AsteroidComponent asteroid = Mappers.ASTEROID.get(asteroidEntity);
+                RockComponent asteroid = Mappers.ASTEROID.get(asteroidEntity);
 
                 if (asteroid.hit) {
                     continue;
@@ -66,6 +65,7 @@ public class CollisionSystem extends EntitySystem {
 
                         asteroid.hit = true;
                         ammo.hit = true;
+                        GameManager.INSTANCE.setHits(GameManager.INSTANCE.getHits()+1);
                         getEngine().removeEntity(asteroidEntity);
                         getEngine().removeEntity(ammoEntity);
                     }
@@ -88,7 +88,7 @@ public class CollisionSystem extends EntitySystem {
 
             // check collision with astronauts
             for (Entity astronautEntity : astronauts) {
-                AstronautComponent astronaut = Mappers.ASTRONAUTS.get(astronautEntity);
+                TreasureComponent astronaut = Mappers.ASTRONAUTS.get(astronautEntity);
 
                 if (astronaut.hit) {
                     continue;
@@ -105,7 +105,7 @@ public class CollisionSystem extends EntitySystem {
             }
             float shieldDuration = 5.0f;
 
-//check collision with shield
+            //check collision with shield
             for (Entity shieldEntity : shields) {
                 ShieldComponent shield = Mappers.SHIELDS.get(shieldEntity);
                 if (shield.hit) {
@@ -122,7 +122,7 @@ public class CollisionSystem extends EntitySystem {
                     GameManager.INSTANCE.setDuration(0f);
 
                 }
-                System.out.println("Shield Duration: " + GameManager.INSTANCE.getShieldDuration());
+              //  System.out.println("Shield Duration: " + GameManager.INSTANCE.getShieldDuration());
 
             }
 

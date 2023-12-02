@@ -31,28 +31,35 @@ public class HudRenderSystem extends EntitySystem {
         batch.setProjectionMatrix(hudViewport.getCamera().combined);
         batch.begin();
 
-        font.setColor(Color.WHITE);
+        font.setColor(Color.BLACK);
 
-        // score
+
+        // SCORE
         // SCORE
         String scoreString = "SCORE: " + GameManager.INSTANCE.getResult();
         layout.setText(font, scoreString);
-        float scoreX = hudViewport.getWorldWidth() / 6 - layout.width / 2;
+        float scoreX = hudViewport.getWorldWidth() / 8 - layout.width / 2;
         float y = hudViewport.getWorldHeight() - layout.height;
         font.draw(batch, layout, scoreX, y);
 
 // HEALTH
         String healthString = "HEALTH: " + GameManager.INSTANCE.getHealth();
         layout.setText(font, healthString);
-        float healthX = 3 * hudViewport.getWorldWidth() / 6 - layout.width / 2;
+        float healthX = 3 * hudViewport.getWorldWidth() / 8 - layout.width / 2;
         font.draw(batch, layout, healthX, y);
 
 // SHIELD
         int shieldDuration = (int) GameManager.INSTANCE.getShieldDuration();
         String shieldString = "SHIELD: " + shieldDuration;
         layout.setText(font, shieldString);
-        float shieldX = 5 * hudViewport.getWorldWidth() / 6 - layout.width / 2;
+        float shieldX = 5 * hudViewport.getWorldWidth() / 8 - layout.width / 2;
         font.draw(batch, layout, shieldX, y);
+
+// HITS
+        String scoreHits = "HITS: " + GameManager.INSTANCE.getHits();
+        layout.setText(font, scoreHits);
+        float hitsX = 7 * hudViewport.getWorldWidth() / 8 - layout.width / 2;
+        font.draw(batch, layout, hitsX, y);
 
 
         if (GameManager.INSTANCE.isGameOver()) {

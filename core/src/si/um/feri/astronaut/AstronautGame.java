@@ -20,15 +20,18 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import si.um.feri.astronaut.assets.AssetDescriptors;
 import si.um.feri.astronaut.common.GameManager;
 import si.um.feri.astronaut.config.GameConfig;
-import si.um.feri.astronaut.ecs.system.AsteroidSpawnSystem;
-import si.um.feri.astronaut.ecs.system.AstronautSpawnSystem;
+import si.um.feri.astronaut.ecs.system.ParticleRenderSystem;
+import si.um.feri.astronaut.ecs.system.RockSpawnSystem;
+import si.um.feri.astronaut.ecs.system.TreasureSpawnSystem;
 import si.um.feri.astronaut.ecs.system.BoundsSystem;
 import si.um.feri.astronaut.ecs.system.CleanUpSystem;
+import si.um.feri.astronaut.ecs.system.CleanUpSystem2;
 import si.um.feri.astronaut.ecs.system.CollisionSystem;
 import si.um.feri.astronaut.ecs.system.HudRenderSystem;
 import si.um.feri.astronaut.ecs.system.MovementSystem;
+import si.um.feri.astronaut.ecs.system.ParticleSystem;
 import si.um.feri.astronaut.ecs.system.RenderSystem;
-import si.um.feri.astronaut.ecs.system.RocketInputSystem;
+import si.um.feri.astronaut.ecs.system.ShipInputSystem;
 import si.um.feri.astronaut.ecs.system.ShieldSpawnSystem;
 import si.um.feri.astronaut.ecs.system.WorldWrapSystem;
 import si.um.feri.astronaut.ecs.system.debug.DebugCameraSystem;
@@ -73,6 +76,8 @@ public class AstronautGame extends ApplicationAdapter {
 
         assetManager.load(AssetDescriptors.GAMEPLAY);
         assetManager.load(AssetDescriptors.DAMAGE_SOUNDS);
+        assetManager.load(AssetDescriptors.WATER_PARTICLE_EFFECT);
+        assetManager.load(AssetDescriptors.FIRE_PARTICLE_EFFECT);
         assetManager.load(AssetDescriptors.LAUGH_SOUNDS);
         assetManager.load(AssetDescriptors.UI_FONT);
         assetManager.finishLoading();
@@ -87,17 +92,24 @@ public class AstronautGame extends ApplicationAdapter {
         engine.addSystem(new StartUpSystem());  // called only at the start, to generate first entities
 
         // 'active' systems
-        engine.addSystem(new RocketInputSystem());
+        engine.addSystem(new ShipInputSystem());
         engine.addSystem(new MovementSystem());
         engine.addSystem(new WorldWrapSystem());
         engine.addSystem(new BoundsSystem());
-        engine.addSystem(new AsteroidSpawnSystem());
-        engine.addSystem(new AstronautSpawnSystem());
+        engine.addSystem(new RockSpawnSystem());
+        engine.addSystem(new TreasureSpawnSystem());
         engine.addSystem(new ShieldSpawnSystem());
         engine.addSystem(new CleanUpSystem());
         engine.addSystem(new CollisionSystem());
+        engine.addSystem(new CleanUpSystem2());
+        engine.addSystem(new ParticleSystem());
         engine.addSystem(new RenderSystem(batch, viewport));
+        engine.addSystem(new ParticleRenderSystem(batch));
+
+
         engine.addSystem(new HudRenderSystem(batch, hudViewport, font));
+
+
 
         // debug systems
         if (debug) {
@@ -131,6 +143,7 @@ public class AstronautGame extends ApplicationAdapter {
             engine.update(0);
         } else {
             engine.update(Gdx.graphics.getDeltaTime());
+
             if(GameManager.INSTANCE.getShieldDuration() > 0){
             GameManager.INSTANCE.setDuration((GameManager.INSTANCE.getShieldDuration())-Gdx.graphics.getDeltaTime());
             }

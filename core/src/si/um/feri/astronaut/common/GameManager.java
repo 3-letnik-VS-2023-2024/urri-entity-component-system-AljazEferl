@@ -7,6 +7,7 @@ public class GameManager {
     private int result;
     private int health;
     public float duration;
+     private int hits;
 
     private boolean shield;
 
@@ -41,6 +42,14 @@ public class GameManager {
 
     public int getHealth() {
         return health;
+    }
+
+    public int getHits() {
+        return hits;
+    }
+
+    public void setHits(int hits) {
+        this.hits = hits;
     }
 
     public void damage() {
