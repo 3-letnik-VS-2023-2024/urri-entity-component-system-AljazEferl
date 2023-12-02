@@ -7,16 +7,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import si.um.feri.astronaut.common.Mappers;
 import si.um.feri.astronaut.ecs.component.ParticleComponent;
+import si.um.feri.astronaut.ecs.component.ParticleComponent2;
 import si.um.feri.astronaut.ecs.component.PositionComponent;
 import si.um.feri.astronaut.ecs.component.ZOrderComparator;
 import si.um.feri.astronaut.ecs.component.ZOrderComponent;
 
 public class ParticleRenderSystem extends SortedIteratingSystem {
     private static final Family PARTICLE_FAMILY = Family.all(
-            ParticleComponent.class,
             PositionComponent.class,
             ZOrderComponent.class
-    ).get();
+    ).one(ParticleComponent.class, ParticleComponent2.class).get();
 
     private final SpriteBatch batch;
 
@@ -37,11 +37,17 @@ public class ParticleRenderSystem extends SortedIteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         ParticleComponent particleComponent = Mappers.PARTICLE.get(entity);
+        ParticleComponent2 particleComponent2 = Mappers.PARTICLE2.get(entity);
 
         if (particleComponent != null && particleComponent.particle != null) {
             particleComponent.particle.draw(batch);
         } else {
-            System.out.println("Invalid Particle Component");
+            System.out.println("Invalid Particle Component1");
+        }
+        if (particleComponent2 != null && particleComponent2.particle != null) {
+            particleComponent2.particle.draw(batch);
+        } else {
+            System.out.println("Invalid Particle Component2");
         }
     }
 }

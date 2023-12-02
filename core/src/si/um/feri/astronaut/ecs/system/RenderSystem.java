@@ -52,13 +52,6 @@ public class RenderSystem extends SortedIteratingSystem {
         PositionComponent position = Mappers.POSITION.get(entity);
         DimensionComponent dimension = Mappers.DIMENSION.get(entity);
         TextureComponent texture = Mappers.TEXTURE.get(entity);
-        ParticleComponent particleComponent = Mappers.PARTICLE.get(entity);
-     if (particleComponent != null && particleComponent.particle != null) {
-            particleComponent.particle.draw(batch);
-           System.out.println("44");
-        }else {
-            System.out.println("123");
-        }
 
        batch.draw(texture.region,
                 position.x, position.y,

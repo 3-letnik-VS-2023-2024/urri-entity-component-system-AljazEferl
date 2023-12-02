@@ -10,9 +10,11 @@ import si.um.feri.astronaut.ecs.component.DimensionComponent;
 import si.um.feri.astronaut.ecs.component.ParticleComponent;
 import si.um.feri.astronaut.ecs.component.PositionComponent;
 import si.um.feri.astronaut.ecs.component.ShipComponent;
+import si.um.feri.astronaut.ecs.component.TreasureComponent;
 
 public class ParticleSystem extends IteratingSystem {
     private static final Family SHIP_FAMILY = Family.all(ShipComponent.class, BoundsComponent.class).get();
+    private static final Family TREASURE_FAMILY = Family.all(TreasureComponent.class, BoundsComponent.class).get();
 
 
     private static final Family FAMILY = Family.all(

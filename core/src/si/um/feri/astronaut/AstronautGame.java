@@ -21,6 +21,7 @@ import si.um.feri.astronaut.assets.AssetDescriptors;
 import si.um.feri.astronaut.common.GameManager;
 import si.um.feri.astronaut.config.GameConfig;
 import si.um.feri.astronaut.ecs.system.ParticleRenderSystem;
+import si.um.feri.astronaut.ecs.system.ParticleSystem2;
 import si.um.feri.astronaut.ecs.system.RockSpawnSystem;
 import si.um.feri.astronaut.ecs.system.TreasureSpawnSystem;
 import si.um.feri.astronaut.ecs.system.BoundsSystem;
@@ -103,6 +104,7 @@ public class AstronautGame extends ApplicationAdapter {
         engine.addSystem(new CollisionSystem());
         engine.addSystem(new CleanUpSystem2());
         engine.addSystem(new ParticleSystem());
+        engine.addSystem(new ParticleSystem2());
         engine.addSystem(new RenderSystem(batch, viewport));
         engine.addSystem(new ParticleRenderSystem(batch));
 

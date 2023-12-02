@@ -22,6 +22,7 @@ public class StartUpSystem extends EntitySystem {
         factory.createTreasure();
         factory.createShip();
         factory.createParticleShip();
+        factory.createParticleTreasure();
         factory.createShield();
     }
 }

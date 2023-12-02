@@ -4,12 +4,14 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.utils.Pool;
 
-public class TreasureComponent implements Component, Pool.Poolable {
-
-    public boolean hit;
-
+public class ParticleComponent2 implements Component, Pool.Poolable {
+    public ParticleEffect particle;
     @Override
     public void reset() {
-        hit = false;
+        if (particle != null) {
+            particle.dispose();
+        }
+        particle = null;
     }
 }
+

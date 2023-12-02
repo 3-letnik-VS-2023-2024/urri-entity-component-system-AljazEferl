@@ -3,6 +3,7 @@ package si.um.feri.astronaut.common;
 import com.badlogic.ashley.core.ComponentMapper;
 
 import si.um.feri.astronaut.ecs.component.AmmoComponent;
+import si.um.feri.astronaut.ecs.component.ParticleComponent2;
 import si.um.feri.astronaut.ecs.component.RockComponent;
 import si.um.feri.astronaut.ecs.component.TreasureComponent;
 import si.um.feri.astronaut.ecs.component.BoundsComponent;
@@ -54,6 +55,10 @@ public final class Mappers {
 
     public static final ComponentMapper<ParticleComponent> PARTICLE =
             ComponentMapper.getFor(ParticleComponent.class);
+
+    public static final ComponentMapper<ParticleComponent2> PARTICLE2 =
+            ComponentMapper.getFor(ParticleComponent2.class);
+
     private Mappers() {
     }
 }
